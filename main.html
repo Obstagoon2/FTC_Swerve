@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTC Coaxial Swerve Drive Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .nav-button.active {
+            background-color: #4a5568;
+            color: #ffffff;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        .resource-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            text-decoration: none;
+            color: #2d3748;
+        }
+        .resource-link:hover {
+            background-color: #edf2f7;
+        }
+        .resource-link svg {
+            margin-right: 0.75rem;
+        }
+    </style>
+    <!-- Chosen Palette: Slate Gray & Amber -->
+    <!-- Application Structure Plan: The application is designed as a single-page tabbed interface. This structure was chosen for its clarity and ease of navigation, allowing users to quickly switch between different swerve drive examples without reloading the page or scrolling through a long document. The main navigation on the left acts as a directory, and the main content area on the right displays the detailed information for the selected example. This approach is user-friendly because it organizes complex, multi-faceted information (CAD, code, video for multiple teams) into discrete, manageable sections. Key interactions include clicking team names to switch content and clicking external resource links. -->
+    <!-- Visualization & Content Choices: Report Info: Various FTC swerve modules -> Goal: Organize and present detailed technical resources for each module. -> Presentation Method: A tabbed layout with categorized resource cards (CAD, Code, Video) for each team/project. This is better than a long list as it groups related assets. Icons are used to visually distinguish resource types. -> Interaction: Users click a team name to load its specific information dynamically. -> Justification: This component-based view makes it easy for a user to compare modules or deep-dive into a specific one. It avoids overwhelming the user with all information at once. -> Library/Method: Vanilla JS for tab switching and dynamic content display. No charts are needed as the data is qualitative. Structured HTML/CSS with Tailwind for layout and styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="min-h-screen flex flex-col md:flex-row">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-gray-800 text-white p-4 md:p-6 shadow-lg">
+            <div class="flex items-center mb-6">
+                <span class="text-2xl font-bold text-amber-400">⚙️</span>
+                <h1 class="text-xl font-bold ml-3">FTC Swerve Hub</h1>
+            </div>
+            <nav id="navigation" class="space-y-2">
+                <button data-target="intro" class="nav-button w-full text-left px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-700 active">Introduction</button>
+                <button data-target="team19376" class="nav-button w-full text-left px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-700">Team 19376</button>
+                <button data-target="davidcao" class="nav-button w-full text-left px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-700">David Cao</button>
+                <button data-target="team21553" class="nav-button w-full text-left px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-700">Team 21553</button>
+                <button data-target="ftclib" class="nav-button w-full text-left px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-700">FTCLib (Software)</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10">
+            <!-- Introduction Section -->
+            <section id="intro" class="content-section active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Exploring Coaxial Swerve Drives in FTC</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    A coaxial swerve drive is an advanced drivetrain where each wheel module can rotate independently (steer) while also being powered for translation. In a coaxial design, the steering and drive power are transmitted via concentric shafts, allowing for a compact and often robust module. This explorer provides a curated list of notable coaxial swerve drive examples from the FTC community, complete with links to their design files, code, and videos.
+                </p>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-3 text-gray-800">How to Use This Explorer</h3>
+                    <p class="text-gray-600">
+                        Use the navigation panel on the left to select a team or project. The main area will update to show detailed information and links for that specific swerve drive implementation. This tool is designed to help teams research, learn from, and build upon the work of others in the community.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Team 19376 Robo-Rams Section -->
+            <section id="team19376" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Team 19376 "Robo-Rams"</h2>
+                <p class="text-lg text-gray-600 mb-6">A compact and effective 3D-printed coaxial swerve module from the CENTERSTAGE season.</p>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-4">Overview</h3>
+                    <p class="text-gray-600 mb-6">
+                        The Robo-Rams developed a highly compact coaxial swerve module that heavily utilizes 3D-printed parts for accessibility. The design is notable for its integrated dead-wheel odometry and clean packaging, making it a strong reference for teams looking to build a competitive and reproducible swerve drive.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Mechanical Details</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>Utilizes bevel gears for power transmission.</li>
+                                <li>Integrates REV Through Bore Encoder.</li>
+                                <li>Designed for Gobilda pattern.</li>
+                                <li>Mainly 3D Printed (PETG/Onyx).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Key Features</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tag bg-blue-100 text-blue-800">3D-Printable</span>
+                                <span class="tag bg-green-100 text-green-800">Compact</span>
+                                <span class="tag bg-purple-100 text-purple-800">Integrated Odometry</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-6">
+                    
+                    <h4 class="font-semibold text-lg mb-3">Resources</h4>
+                    <div class="space-y-3">
+                        <a href="https://grabcad.com/library/19376-centerstage-swerve-module-1" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                            <span>CAD (GrabCAD)</span>
+                        </a>
+                        <a href="https://github.com/Robo-Rams/Centerstage-19376" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            <span>Code (GitHub)</span>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=FjGWN8m_f2k" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"></path><polygon points="9.5 14.5 15.5 11 9.5 7.5"></polygon></svg>
+                            <span>Video (YouTube Reveal)</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- David Cao "Baby Swerve" Section -->
+            <section id="davidcao" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">David Cao's "Baby Swerve"</h2>
+                <p class="text-lg text-gray-600 mb-6">An extremely small and lightweight coaxial swerve module design.</p>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-4">Overview</h3>
+                    <p class="text-gray-600 mb-6">
+                        This design by David Cao is famous in the FTC community for its incredible miniaturization. "Baby Swerve" pushes the limits of what is possible with COTS parts and 3D printing, resulting in a module that is exceptionally light and compact. While potentially less robust than larger designs, it serves as an excellent design study in efficiency and minimalist engineering.
+                    </p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Mechanical Details</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>Ultra-lightweight and compact form factor.</li>
+                                <li>Uses a planetary gearset for steering.</li>
+                                <li>Heavily reliant on precise 3D printing.</li>
+                                <li>Designed around micro motors.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Key Features</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tag bg-yellow-100 text-yellow-800">Miniature</span>
+                                <span class="tag bg-blue-100 text-blue-800">Lightweight</span>
+                                <span class="tag bg-gray-100 text-gray-800">Community Classic</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-6">
+                    
+                    <h4 class="font-semibold text-lg mb-3">Resources</h4>
+                    <div class="space-y-3">
+                        <a href="https://grabcad.com/library/baby-swerve-v2-1" target="_blank" class="resource-link">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                            <span>CAD (GrabCAD)</span>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=s8aB7_vo_aQ" target="_blank" class="resource-link">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"></path><polygon points="9.5 14.5 15.5 11 9.5 7.5"></polygon></svg>
+                            <span>Video (YouTube Demo)</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Team 21553 Checkmate Section -->
+            <section id="team21553" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Team 21553 "Checkmate"</h2>
+                <p class="text-lg text-gray-600 mb-6">A robust, metal-based coaxial swerve from the POWERPLAY season.</p>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-4">Overview</h4>
+                    <p class="text-gray-600 mb-6">
+                        Team Checkmate's swerve is a great example of a durable, high-performance module built primarily from COTS metal parts. This design prioritizes reliability and stiffness, making it suitable for high-impact gameplay. It's an excellent resource for teams who prefer machining and metal construction over 3D printing.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Mechanical Details</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>Primarily constructed from Gobilda parts.</li>
+                                <li>Uses a large bearing for rotation.</li>
+                                <li>Focus on rigidity and durability.</li>
+                                <li>Exposed motor design.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Key Features</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tag bg-gray-200 text-gray-800">Metal-Based</span>
+                                <span class="tag bg-red-100 text-red-800">Durable</span>
+                                <span class="tag bg-green-100 text-green-800">High-Performance</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-6">
+                    
+                    <h4 class="font-semibold text-lg mb-3">Resources</h4>
+                    <div class="space-y-3">
+                        <a href="https://cad.onshape.com/documents/d33458569503463e8b38383f/w/3371a3070ab7f293b0a2185c/e/a87c1c201d46d888e404b901" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            <span>CAD (Onshape)</span>
+                        </a>
+                        <a href="https://github.com/ftc21553/PowerPlay" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            <span>Code (GitHub)</span>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=I7b8h3a3bIs" target="_blank" class="resource-link">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"></path><polygon points="9.5 14.5 15.5 11 9.5 7.5"></polygon></svg>
+                            <span>Video (YouTube Reveal)</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- FTCLib Software Section -->
+            <section id="ftclib" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">FTCLib (Software Framework)</h2>
+                <p class="text-lg text-gray-600 mb-6">The essential software library for controlling advanced drivetrains in FTC.</p>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-4">Overview</h3>
+                    <p class="text-gray-600 mb-6">
+                        While not a physical mechanism, FTCLib is a critical resource for any team implementing a swerve drive. It provides a robust, pre-built software framework for handling the complex mathematics (kinematics and odometry) required to control a swerve drive. Using FTCLib saves teams hundreds of hours of software development and provides a reliable foundation to build upon.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Key Software Components</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>SwerveModule class for individual module control.</li>
+                                <li>SwerveDrive class for chassis kinematics.</li>
+                                <li>PID controllers for steering motors.</li>
+                                <li>Support for field-centric control.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Why Use It?</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tag bg-purple-100 text-purple-800">Abstracts Complexity</span>
+                                <span class="tag bg-blue-100 text-blue-800">Community Standard</span>
+                                <span class="tag bg-green-100 text-green-800">Well-Documented</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-6">
+                    
+                    <h4 class="font-semibold text-lg mb-3">Resources</h4>
+                    <div class="space-y-3">
+                        <a href="https://docs.ftclib.org/ftclib/features/drivetrains" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span>Documentation</span>
+                        </a>
+                        <a href="https://github.com/FTCLib/FTCLib" target="_blank" class="resource-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            <span>Code (GitHub)</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function switchTab(targetId) {
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                navButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+                
+                document.getElementById(targetId).classList.add('active');
+                document.querySelector(`[data-target="${targetId}"]`).classList.add('active');
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+                    switchTab(targetId);
+                });
+            });
+
+            // Set initial state
+            switchTab('intro');
+        });
+    </script>
+
+</body>
+</html>
